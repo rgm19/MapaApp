@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -27,8 +28,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Marker marcador;
-    double lat=0.0;
-    double lng=0.0;
+    double lat = 0.0;
+    double lng = 0.0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +38,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 
-        if(status == ConnectionResult.SUCCESS){
+        if (status == ConnectionResult.SUCCESS) {
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
             mapFragment.getMapAsync(this);
-        }else{
-            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status,(Activity)getApplicationContext(),10);
+        } else {
+            Dialog dialog = GooglePlayServicesUtil.getErrorDialog(status, (Activity) getApplicationContext(), 10);
             dialog.show();
         }
 
@@ -54,14 +55,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
+        /*
+        googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(10, 10))
+                .title("Hello world"));
+        */
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
         miUbicacion();
+        mMap.setMyLocationEnabled(true);
+        mMap.addMarker(new MarkerOptions().position(new LatLng(10,10)).title("Mi Posicion").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+
     }
 
     private void agregarMarcador(double lat, double lng){
         LatLng coordenadas = new LatLng(lat,lng);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,16);
         if(marcador!=null){marcador.remove();}
-        marcador=mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posicion").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+        marcador=mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posicion").icon(BitmapDescriptorFactory.fromResource(R.drawable.google_marca)));
         mMap.animateCamera(miUbicacion);
 
     }
@@ -70,6 +84,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat=location.getLatitude();
             lng=location.getLongitude();
             agregarMarcador(lat,lng);
+        }else{
+            Toast.makeText(this, "HOLAAAAAAAA", Toast.LENGTH_SHORT).show();
         }
     }
 
