@@ -58,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         /*
         googleMap.addMarker(new MarkerOptions()
                 .position(new LatLng(10, 10))
-                .title("Hello world"));
+                .title("Hello world").icon(BitmapDescriptorFactory.fromResource(R.drawable.google_marca)));
         */
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -66,8 +66,34 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         miUbicacion();
-        mMap.setMyLocationEnabled(true);
-        mMap.addMarker(new MarkerOptions().position(new LatLng(10,10)).title("Mi Posicion").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+        //mMap.setMyLocationEnabled(true);
+
+
+        //Veterinarios
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.769279,-2.817308)).title("Veterinario EjidoSur").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_verde)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.773382,-2.813102)).title("Veterinario Clinica Azabache").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_verde)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.768299,-2.804035)).title("Veterinario Santo Domingo").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_verde)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.775951,-2.816915)).title("Veterinario Poniente").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_verde)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.779152,-2.814606)).title("Veterinario Mi Mascota").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_verde)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.777984,-2.809835)).title("Veterinario Yolanda Garnica").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_verde)));
+
+        //Tiendas de Mascotas
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.773692,-2.800255)).title("Tienda A-M Mascotas").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_rojo)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36776734,-2.807143)).title("Tienda Chow Chow").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_rojo)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.781091,-2.815915)).title("Tienda El Reclamo").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_rojo)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.772448,-2.819193)).title("Tienda La Oca").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_rojo)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.774184, -2.821343)).title("Tienda Toda Animalia").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_rojo)));
+        mMap.addMarker(new MarkerOptions().position(new LatLng(36.773881, -2.821524)).title("Tienda Animal Farma S.L").icon(BitmapDescriptorFactory.fromResource(R.drawable.marca_rojo)));
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -75,7 +101,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng coordenadas = new LatLng(lat,lng);
         CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas,16);
         if(marcador!=null){marcador.remove();}
-        marcador=mMap.addMarker(new MarkerOptions().position(coordenadas).title("Mi Posicion").icon(BitmapDescriptorFactory.fromResource(R.drawable.google_marca)));
+        marcador=mMap.addMarker(new MarkerOptions().position(coordenadas).title("Ultima Posicion").icon(BitmapDescriptorFactory.fromResource(R.drawable.google_marca)));
         mMap.animateCamera(miUbicacion);
 
     }
@@ -84,8 +110,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             lat=location.getLatitude();
             lng=location.getLongitude();
             agregarMarcador(lat,lng);
-        }else{
-            Toast.makeText(this, "HOLAAAAAAAA", Toast.LENGTH_SHORT).show();
         }
     }
 
