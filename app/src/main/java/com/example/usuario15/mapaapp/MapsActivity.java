@@ -55,18 +55,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        /*
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(10, 10))
-                .title("Hello world").icon(BitmapDescriptorFactory.fromResource(R.drawable.google_marca)));
-        */
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
 
         miUbicacion();
-        //mMap.setMyLocationEnabled(true);
+
 
 
         //Veterinarios
